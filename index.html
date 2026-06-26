@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ardi — Player Two, Loading As Developer</title>
+  <meta name="description" content="Portfolio Ardi, seorang gamer yang sedang belajar menjadi programmer. Ikuti journey, skill, dan project yang sedang dipelajari.">
+  <meta name="keywords" content="Ardi, portfolio, gamer, programmer, web developer, belajar coding, frontend, javascript">
+  <meta name="author" content="Ardi">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Ardi — Player Two, Loading As Developer">
+  <meta property="og:description" content="Seorang gamer yang sedang menulis ulang dirinya menjadi programmer. Lihat journey, skill, dan project pembelajaran Ardi.">
+  <meta property="og:image" content="assets/images/og-cover.jpg">
+  <meta property="og:url" content="https://ardi.dev">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ardi — Player Two, Loading As Developer">
+  <meta name="twitter:description" content="Seorang gamer yang sedang menulis ulang dirinya menjadi programmer.">
+  <meta name="twitter:image" content="assets/images/og-cover.jpg">
+
+  <link rel="canonical" href="https://ardi.dev">
+  <link rel="icon" type="image/png" href="assets/icons/favicon.png">
+
+  <!-- Preconnect fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Ardi",
+    "jobTitle": "Self-taught Web Developer (Learning)",
+    "description": "Seorang gamer yang sedang belajar menjadi programmer.",
+    "url": "https://ardi.dev"
+  }
+  </script>
+</head>
+<body data-page="home">
+
+  <!-- ============ LOADING SCREEN ============ -->
+  <div id="loader" class="loader" aria-hidden="true">
+    <div class="loader__inner">
+      <div class="loader__logo">A_</div>
+      <div class="loader__bar-track">
+        <div class="loader__bar-fill" id="loaderBarFill"></div>
+      </div>
+      <p class="loader__status" id="loaderStatus">BOOTING SYSTEM<span class="loader__dots">...</span></p>
+      <p class="loader__percent" id="loaderPercent">0%</p>
+    </div>
+  </div>
+
+  <!-- ============ CUSTOM CURSOR ============ -->
+  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <!-- ============ MOUSE GLOW ============ -->
+  <div class="mouse-glow" id="mouseGlow" aria-hidden="true"></div>
+
+  <!-- ============ SCROLL PROGRESS ============ -->
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <!-- ============ PARTICLE CANVAS ============ -->
+  <canvas id="particleCanvas" class="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- ============ TOAST CONTAINER ============ -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- ============ COMMAND PALETTE ============ -->
+  <div id="commandPalette" class="command-palette" role="dialog" aria-modal="true" aria-label="Command Palette" hidden>
+    <div class="command-palette__backdrop" id="commandPaletteBackdrop"></div>
+    <div class="command-palette__box glass">
+      <div class="command-palette__input-row">
+        <span class="command-palette__prompt">&gt;</span>
+        <input type="text" id="commandInput" class="command-palette__input" placeholder="Ketik command... (coba: help)" autocomplete="off">
+        <kbd class="command-palette__esc">ESC</kbd>
+      </div>
+      <ul class="command-palette__list" id="commandList"></ul>
+    </div>
+  </div>
+
+  <!-- ============ NAVBAR ============ -->
+  <header class="navbar" id="navbar">
+    <nav class="navbar__inner glass" aria-label="Navigasi utama">
+      <a href="#hero" class="navbar__logo" id="logoTrigger" title="Klik beberapa kali, lihat apa yang terjadi">
+        <span class="navbar__logo-bracket">&lt;</span>Ardi<span class="navbar__logo-bracket">/&gt;</span>
+      </a>
+
+      <ul class="navbar__links" id="navLinks">
+        <li><a href="#hero" class="navbar__link">Home</a></li>
+        <li><a href="#about" class="navbar__link">About</a></li>
+        <li><a href="#journey" class="navbar__link">Journey</a></li>
+        <li><a href="#skills" class="navbar__link">Skills</a></li>
+        <li><a href="#projects" class="navbar__link">Projects</a></li>
+        <li><a href="#terminal" class="navbar__link">Terminal</a></li>
+        <li><a href="#contact" class="navbar__link">Contact</a></li>
+      </ul>
+
+      <div class="navbar__actions">
+        <button class="navbar__cmd-btn" id="cmdBtn" title="Buka command palette (Ctrl+K)">
+          <span>⌘K</span>
+        </button>
+        <button class="navbar__burger" id="burgerBtn" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ============ HERO ============ -->
+    <section id="hero" class="hero">
+      <div class="hero__floating-shapes" aria-hidden="true">
+        <span class="shape shape--1"></span>
+        <span class="shape shape--2"></span>
+        <span class="shape shape--3"></span>
+        <span class="shape shape--4"></span>
+      </div>
+
+      <div class="hero__content">
+        <p class="hero__eyebrow glass-tag">
+          <span class="status-dot"></span> STATUS: LEARNING.exe IS RUNNING
+        </p>
+
+        <h1 class="hero__title">
+          <span class="hero__title-line">Player Two,</span>
+          <span class="hero__title-line hero__title-line--accent">Loading As Developer<span class="cursor-blink">_</span></span>
+        </h1>
+
+        <p class="hero__subtitle">
+          Halo, saya <span class="typing-target" id="typingTarget"></span>
+        </p>
+
+        <p class="hero__desc">
+          Dulu cuma push rank di tengah malam. Sekarang push commit di tengah malam.
+          Saya <strong>Ardi</strong> — gamer yang sedang grinding XP baru: <em>programming</em>.
+        </p>
+
+        <div class="hero__cta-group">
+          <a href="#journey" class="btn btn--primary">
+            <span>Lihat Journey</span>
+          </a>
+          <a href="#terminal" class="btn btn--ghost">
+            <span>Buka Terminal</span>
+          </a>
+        </div>
+
+        <div class="hero__hint">
+          Tekan <kbd>Ctrl</kbd> + <kbd>K</kbd> untuk command palette
+        </div>
+      </div>
+
+      <div class="hero__scroll-indicator" aria-hidden="true">
+        <span class="hero__scroll-mouse"></span>
+        <span class="hero__scroll-text">scroll</span>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section id="about" class="section about">
+      <div class="section__header reveal">
+        <span class="section__eyebrow">// 01 — ABOUT</span>
+        <h2 class="section__title">Karakter Sheet Saya</h2>
+        <p class="section__subtitle">Bukan developer profesional. Masih level rendah, masih grinding.</p>
+      </div>
+
+      <div class="about__grid">
+        <div class="about__card glass tilt reveal">
+          <div class="about__avatar-frame">
+            <div class="about__avatar-glow"></div>
+            <img src="assets/images/avatar.jpg" alt="Avatar Ardi" class="about__avatar" loading="lazy" onerror="this.style.display='none'">
+            <div class="about__avatar-fallback">A</div>
+          </div>
+          <h3 class="about__name">Ardi</h3>
+          <p class="about__class">Class: Apprentice Developer</p>
+          <div class="about__level-bar" title="Level pengalaman saat ini">
+            <div class="about__level-fill" data-fill="38"></div>
+          </div>
+          <p class="about__level-label">LV.4 — 38% to next level</p>
+        </div>
+
+        <div class="about__text reveal">
+          <p>
+            Saya menghabiskan bertahun-tahun di depan layar sebagai gamer — menghapal combo,
+            membaca pola musuh, dan belajar bahwa setiap kekalahan adalah data, bukan akhir.
+          </p>
+          <p>
+            Suatu hari saya sadar: skill yang saya pakai untuk main game — sabar mencoba ulang,
+            membaca dokumentasi build, eksperimen strategi — adalah skill yang sama untuk belajar <strong>coding</strong>.
+          </p>
+          <p>
+            Jadi sekarang saya pindah arena. Dari leaderboard ke <code>console.log()</code>.
+            Saya masih belajar, masih banyak error, tapi saya menikmati setiap proses grinding-nya.
+          </p>
+
+          <ul class="about__tags">
+            <li class="glass-tag">Self-taught</li>
+            <li class="glass-tag">Gamer Mindset</li>
+            <li class="glass-tag">Masih Belajar</li>
+            <li class="glass-tag">Suka Eksperimen</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ JOURNEY / TIMELINE ============ -->
+    <section id="journey" class="section journey">
+      <div class="section__header reveal">
+        <span class="section__eyebrow">// 02 — JOURNEY</span>
+        <h2 class="section__title">Save Point Perjalanan</h2>
+        <p class="section__subtitle">Bukan urutan prestasi. Ini log perjalanan, lengkap dengan checkpoint gagalnya.</p>
+      </div>
+
+      <ol class="timeline">
+        <li class="timeline__item reveal">
+          <div class="timeline__marker"></div>
+          <div class="timeline__card glass">
+            <span class="timeline__tag">SAVE POINT 01</span>
+            <h3 class="timeline__title">Full-time Gamer</h3>
+            <p class="timeline__desc">Menghabiskan waktu mendalami game, memahami mekanik, dan kompetisi. Tidak menyangka ini akan jadi fondasi pola pikir belajar saya nanti.</p>
+          </div>
+        </li>
+
+        <li class="timeline__item reveal">
+          <div class="timeline__marker"></div>
+          <div class="timeline__card glass">
+            <span class="timeline__tag">SAVE POINT 02</span>
+            <h3 class="timeline__title">Penasaran dengan "Bagaimana Game Dibuat"</h3>
+            <p class="timeline__desc">Mulai bertanya-tanya bagaimana script, server, dan logic game bekerja di balik layar. Rasa penasaran ini jadi pintu masuk ke dunia kode.</p>
+          </div>
+        </li>
+
+        <li class="timeline__item reveal">
+          <div class="timeline__marker"></div>
+          <div class="timeline__card glass">
+            <span class="timeline__tag">SAVE POINT 03</span>
+            <h3 class="timeline__title">HTML &amp; CSS Pertama</h3>
+            <p class="timeline__desc">Belajar dasar web — banyak bingung, banyak struktur berantakan, tapi excited setiap kali ada perubahan yang terlihat di browser.</p>
+          </div>
+        </li>
+
+        <li class="timeline__item reveal">
+          <div class="timeline__marker"></div>
+          <div class="timeline__card glass">
+            <span class="timeline__tag">SAVE POINT 04 — CURRENT</span>
+            <h3 class="timeline__title">Belajar JavaScript &amp; Logic Dasar</h3>
+            <p class="timeline__desc">Sedang di titik ini sekarang. Masih sering stuck, masih sering buka dokumentasi berulang kali — tapi makin paham cara berpikir programmatic.</p>
+          </div>
+        </li>
+
+        <li class="timeline__item reveal">
+          <div class="timeline__marker timeline__marker--future"></div>
+          <div class="timeline__card glass timeline__card--future">
+            <span class="timeline__tag">NEXT SAVE POINT</span>
+            <h3 class="timeline__title">??? — Belum Ter-unlock</h3>
+            <p class="timeline__desc">Masih dalam perjalanan. Mungkin frontend lebih dalam, mungkin backend, mungkin game development. Belum diputuskan — masih eksplorasi map.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============ SKILLS ============ -->
+    <section id="skills" class="section skills">
+      <div class="section__header reveal">
+        <span class="section__eyebrow">// 03 — SKILLS</span>
+        <h2 class="section__title">Stat Build Saat Ini</h2>
+        <p class="section__subtitle">XP bar ini jujur — bukan klaim "expert", ini progress belajar yang sebenarnya.</p>
+      </div>
+
+      <div class="skills__grid">
+        <div class="skill-card glass tilt reveal" data-skill="HTML" data-level="70">
+          <div class="skill-card__head">
+            <span class="skill-card__name">HTML</span>
+            <span class="skill-card__pct">70%</span>
+          </div>
+          <div class="skill-card__bar"><div class="skill-card__fill" data-fill="70"></div></div>
+          <p class="skill-card__note">Cukup nyaman menyusun struktur semantic.</p>
+        </div>
+
+        <div class="skill-card glass tilt reveal" data-skill="CSS" data-level="60">
+          <div class="skill-card__head">
+            <span class="skill-card__name">CSS</span>
+            <span class="skill-card__pct">60%</span>
+          </div>
+          <div class="skill-card__bar"><div class="skill-card__fill" data-fill="60"></div></div>
+          <p class="skill-card__note">Masih belajar layout kompleks &amp; animasi.</p>
+        </div>
+
+        <div class="skill-card glass tilt reveal" data-skill="JavaScript" data-level="45">
+          <div class="skill-card__head">
+            <span class="skill-card__name">JavaScript</span>
+            <span class="skill-card__pct">45%</span>
+          </div>
+          <div class="skill-card__bar"><div class="skill-card__fill" data-fill="45"></div></div>
+          <p class="skill-card__note">Sedang grinding logic, DOM, dan async.</p>
+        </div>
+
+        <div class="skill-card glass tilt reveal" data-skill="Git & GitHub" data-level="35">
+          <div class="skill-card__head">
+            <span class="skill-card__name">Git &amp; GitHub</span>
+            <span class="skill-card__pct">35%</span>
+          </div>
+          <div class="skill-card__bar"><div class="skill-card__fill" data-fill="35"></div></div>
+          <p class="skill-card__note">Paham commit &amp; push, masih belajar branching.</p>
+        </div>
+
+        <div class="skill-card glass tilt reveal" data-skill="Problem Solving" data-level="65">
+          <div class="skill-card__head">
+            <span class="skill-card__name">Problem Solving</span>
+            <span class="skill-card__pct">65%</span>
+          </div>
+          <div class="skill-card__bar"><div class="skill-card__fill" data-fill="65"></div></div>
+          <p class="skill-card__note">Sisa instinct dari kebiasaan main game strategi.</p>
+        </div>
+
+        <div class="skill-card glass tilt reveal" data-skill="Konsistensi Belajar" data-level="80">
+          <div class="skill-card__head">
+            <span class="skill-card__name">Konsistensi Belajar</span>
+            <span class="skill-card__pct">80%</span>
+          </div>
+          <div class="skill-card__bar"><div class="skill-card__fill" data-fill="80"></div></div>
+          <p class="skill-card__note">Stat tertinggi saya — tidak gampang menyerah.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ STATISTICS ============ -->
+    <section id="stats" class="section stats">
+      <div class="stats__grid">
+        <div class="stat-box glass reveal">
+          <span class="stat-box__number" data-target="120" data-suffix="+">0</span>
+          <span class="stat-box__label">Jam Belajar Coding</span>
+        </div>
+        <div class="stat-box glass reveal">
+          <span class="stat-box__number" data-target="35" data-suffix="+">0</span>
+          <span class="stat-box__label">Bug yang Berhasil Ditaklukan</span>
+        </div>
+        <div class="stat-box glass reveal">
+          <span class="stat-box__number" data-target="8" data-suffix="">0</span>
+          <span class="stat-box__label">Mini Project Latihan</span>
+        </div>
+        <div class="stat-box glass reveal">
+          <span class="stat-box__number" data-target="999" data-suffix="+">0</span>
+          <span class="stat-box__label">Cangkir Kopi / Energy Drink</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROJECTS ============ -->
+    <section id="projects" class="section projects">
+      <div class="section__header reveal">
+        <span class="section__eyebrow">// 04 — PROJECTS</span>
+        <h2 class="section__title">Quest Log</h2>
+        <p class="section__subtitle">Belum ada project "selesai dan production-ready" — semua masih berstatus quest yang sedang dikerjakan.</p>
+      </div>
+
+      <div class="projects__grid">
+        <article class="project-card glass tilt reveal">
+          <div class="project-card__status project-card__status--learning">Learning</div>
+          <h3 class="project-card__title">Personal Portfolio v1</h3>
+          <p class="project-card__desc">Website ini sendiri — dipakai sebagai latihan HTML, CSS, dan JavaScript murni tanpa framework.</p>
+          <div class="project-card__tags">
+            <span class="glass-tag">HTML</span>
+            <span class="glass-tag">CSS</span>
+            <span class="glass-tag">JavaScript</span>
+          </div>
+        </article>
+
+        <article class="project-card glass tilt reveal">
+          <div class="project-card__status project-card__status--planning">Planning</div>
+          <h3 class="project-card__title">Mini Game Tracker</h3>
+          <p class="project-card__desc">Rencana app sederhana untuk mencatat jam main &amp; progress game pribadi. Masih tahap rancangan fitur.</p>
+          <div class="project-card__tags">
+            <span class="glass-tag">JavaScript</span>
+            <span class="glass-tag">LocalStorage</span>
+          </div>
+        </article>
+
+        <article class="project-card glass tilt reveal">
+          <div class="project-card__status project-card__status--coming">Coming Soon</div>
+          <h3 class="project-card__title">To-Do List "Quest Board"</h3>
+          <p class="project-card__desc">To-do list bertema RPG, setiap task akan terasa seperti quest dengan reward XP virtual.</p>
+          <div class="project-card__tags">
+            <span class="glass-tag">JavaScript</span>
+            <span class="glass-tag">UI/UX</span>
+          </div>
+        </article>
+
+        <article class="project-card glass tilt reveal">
+          <div class="project-card__status project-card__status--planning">Planning</div>
+          <h3 class="project-card__title">Belajar Backend Dasar</h3>
+          <p class="project-card__desc">Rencana belajar Node.js dasar setelah JavaScript fundamental lebih matang. Belum dimulai.</p>
+          <div class="project-card__tags">
+            <span class="glass-tag">Node.js</span>
+            <span class="glass-tag">Belum Dimulai</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ FAKE TERMINAL ============ -->
+    <section id="terminal" class="section terminal-section">
+      <div class="section__header reveal">
+        <span class="section__eyebrow">// 05 — TERMINAL</span>
+        <h2 class="section__title">Coba Terminal-nya</h2>
+        <p class="section__subtitle">Terminal palsu, tapi interaktif. Ketik <code>help</code> untuk mulai.</p>
+      </div>
+
+      <div class="fake-terminal glass reveal" id="fakeTerminal">
+        <div class="fake-terminal__bar">
+          <span class="fake-terminal__dot fake-terminal__dot--red"></span>
+          <span class="fake-terminal__dot fake-terminal__dot--yellow"></span>
+          <span class="fake-terminal__dot fake-terminal__dot--green"></span>
+          <span class="fake-terminal__path">ardi@learning-journey: ~</span>
+        </div>
+        <div class="fake-terminal__body" id="terminalBody"></div>
+        <div class="fake-terminal__input-row">
+          <span class="fake-terminal__prompt">ardi@dev:~$</span>
+          <input type="text" id="terminalInput" class="fake-terminal__input" autocomplete="off" spellcheck="false" aria-label="Terminal input">
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section id="contact" class="section contact">
+      <div class="section__header reveal">
+        <span class="section__eyebrow">// 06 — CONTACT</span>
+        <h2 class="section__title">Mau Ngobrol / Kolaborasi Belajar?</h2>
+        <p class="section__subtitle">Saya masih pemula, tapi selalu terbuka untuk diskusi, koreksi, atau sekadar nge-game bareng.</p>
+      </div>
+
+      <div class="contact__grid reveal">
+        <form class="contact__form glass" id="contactForm" novalidate>
+          <div class="form-group">
+            <label for="nameInput">Nama</label>
+            <input type="text" id="nameInput" name="name" placeholder="Nama kamu" required>
+          </div>
+          <div class="form-group">
+            <label for="emailInput">Email</label>
+            <input type="email" id="emailInput" name="email" placeholder="email@kamu.com" required>
+          </div>
+          <div class="form-group">
+            <label for="messageInput">Pesan</label>
+            <textarea id="messageInput" name="message" rows="4" placeholder="Tulis pesan kamu di sini..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary btn--block">
+            <span>Kirim Pesan</span>
+          </button>
+        </form>
+
+        <div class="contact__links">
+          <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="contact-link glass">
+            <span class="contact-link__icon">GH</span>
+            <span class="contact-link__text">GitHub</span>
+          </a>
+          <a href="mailto:hello@ardi.dev" class="contact-link glass">
+            <span class="contact-link__icon">@</span>
+            <span class="contact-link__text">Email</span>
+          </a>
+          <a href="#" class="contact-link glass">
+            <span class="contact-link__icon">IG</span>
+            <span class="contact-link__text">Instagram</span>
+          </a>
+          <a href="#" class="contact-link glass">
+            <span class="contact-link__icon">DC</span>
+            <span class="contact-link__text">Discord</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer__inner glass">
+      <p class="footer__brand"><span class="footer__bracket">&lt;</span>Ardi<span class="footer__bracket">/&gt;</span></p>
+      <p class="footer__text">Dibangun dari nol, baris demi baris, error demi error. © <span id="footerYear"></span> Ardi.</p>
+      <p class="footer__sub">Status: masih belajar. Selalu.</p>
+    </div>
+  </footer>
+
+  <!-- ============ BACK TO TOP ============ -->
+  <button id="backToTop" class="back-to-top" aria-label="Kembali ke atas" title="Kembali ke atas">
+    <span>↑</span>
+  </button>
+
+  <!-- ============ AUDIO (easter egg) ============ -->
+  <audio id="easterEggSound" src="assets/sounds/easter-egg.mp3" preload="none"></audio>
+
+  <!-- ============ SCRIPTS ============ -->
+  <script src="js/loader.js"></script>
+  <script src="js/cursor.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/typing.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/counter.js"></script>
+  <script src="js/terminal.js"></script>
+  <script src="js/command-palette.js"></script>
+  <script src="js/easteregg.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
