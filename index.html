@@ -105,10 +105,14 @@
         <li><a href="#skills" class="navbar__link">Skills</a></li>
         <li><a href="#projects" class="navbar__link">Projects</a></li>
         <li><a href="#terminal" class="navbar__link">Terminal</a></li>
+        <li><a href="#minigame" class="navbar__link">Mini Game</a></li>
         <li><a href="#contact" class="navbar__link">Contact</a></li>
       </ul>
 
       <div class="navbar__actions">
+        <button class="navbar__music-btn" id="musicToggle" title="Putar / pause musik" aria-pressed="false">
+          <span class="navbar__music-icon" id="musicIcon">🔇</span>
+        </button>
         <button class="navbar__cmd-btn" id="cmdBtn" title="Buka command palette (Ctrl+K)">
           <span>⌘K</span>
         </button>
@@ -434,10 +438,50 @@
       </div>
     </section>
 
+    <!-- ============ MINI GAME ============ -->
+    <section id="minigame" class="section minigame-section">
+      <div class="section__header reveal">
+        <span class="section__eyebrow">// 06 — MINI GAME</span>
+        <h2 class="section__title">Debug Smasher</h2>
+        <p class="section__subtitle">
+          Klik <strong>bug</strong> sebelum menghilang. Jangan klik <strong>clean code</strong> — itu udah benar, jangan dirusak!
+        </p>
+      </div>
+
+      <div class="game-card glass reveal" id="gameCard">
+        <div class="game-stats">
+          <div class="game-stat">
+            <span class="game-stat__label">Score</span>
+            <span class="game-stat__value" id="gameScore">0</span>
+          </div>
+          <div class="game-stat">
+            <span class="game-stat__label">Waktu</span>
+            <span class="game-stat__value" id="gameTime">30</span>
+          </div>
+          <div class="game-stat">
+            <span class="game-stat__label">High Score</span>
+            <span class="game-stat__value" id="gameHighScore">0</span>
+          </div>
+        </div>
+
+        <div class="game-board" id="gameBoard">
+          <div class="game-overlay" id="gameOverlay">
+            <p class="game-overlay__title" id="gameOverlayTitle">Siap Debugging?</p>
+            <p class="game-overlay__desc" id="gameOverlayDesc">
+              🐛 Bug biasa = +10 &nbsp;|&nbsp; 🪲 Bug langka = +30 &nbsp;|&nbsp; ✅ Clean code = -15 (jangan diklik!)
+            </p>
+            <button class="btn btn--primary" id="gameStartBtn">Mulai Main</button>
+          </div>
+        </div>
+
+        <p class="game-hint">Round berlangsung 30 detik. High score tersimpan otomatis di browser kamu.</p>
+      </div>
+    </section>
+
     <!-- ============ CONTACT ============ -->
     <section id="contact" class="section contact">
       <div class="section__header reveal">
-        <span class="section__eyebrow">// 06 — CONTACT</span>
+        <span class="section__eyebrow">// 07 — CONTACT</span>
         <h2 class="section__title">Mau Ngobrol / Kolaborasi Belajar?</h2>
         <p class="section__subtitle">Saya masih pemula, tapi selalu terbuka untuk diskusi, koreksi, atau sekadar nge-game bareng.</p>
       </div>
@@ -498,8 +542,9 @@
     <span>↑</span>
   </button>
 
-  <!-- ============ AUDIO (easter egg) ============ -->
+  <!-- ============ AUDIO (easter egg & background music) ============ -->
   <audio id="easterEggSound" src="assets/sounds/easter-egg.mp3" preload="none"></audio>
+  <audio id="bgmAudio" src="assets/sounds/bgm.mp3" loop preload="none"></audio>
 
   <!-- ============ SCRIPTS ============ -->
   <script src="js/loader.js"></script>
@@ -511,6 +556,8 @@
   <script src="js/terminal.js"></script>
   <script src="js/command-palette.js"></script>
   <script src="js/easteregg.js"></script>
+  <script src="js/minigame.js"></script>
+  <script src="js/music.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

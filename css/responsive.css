@@ -165,6 +165,24 @@
     font-size: 0.8rem;
   }
 
+  .game-board {
+    height: 260px;
+  }
+
+  .game-target {
+    width: 40px;
+    height: 40px;
+    font-size: 1.3rem;
+  }
+
+  .game-stats {
+    gap: 0.5rem;
+  }
+
+  .game-stat__value {
+    font-size: 1.3rem;
+  }
+
   .toast-container {
     left: 12px;
     right: 12px;

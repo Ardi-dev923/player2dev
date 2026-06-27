@@ -35,6 +35,8 @@ portfolio/
 │   ├── counter.js               # Animasi angka statistik
 │   ├── terminal.js              # Fake terminal interaktif
 │   ├── command-palette.js       # Command palette (Ctrl + K)
+│   ├── minigame.js              # Mini game "Debug Smasher"
+│   ├── music.js                  # Background music toggle
 │   └── easteregg.js             # Easter egg saat logo diklik berkali-kali
 │
 ├── assets/
@@ -59,6 +61,8 @@ portfolio/
 - Statistics (animated counter)
 - Planned Projects (status: Planning / Learning / Coming Soon)
 - Fake Terminal interaktif (`help`, `about`, `skills`, dll)
+- Mini Game "Debug Smasher" dengan high score tersimpan lokal
+- Background Music toggle (play/pause, ikon di navbar)
 - Command Palette (`Ctrl + K` atau klik tombol `⌘K`)
 - Contact Form (simulasi, belum terhubung backend)
 - Toast Notification system
@@ -131,6 +135,21 @@ JavaScript, animasi, dan best practice frontend.
 ---
 
 ## 📝 Changelog
+
+### v1.5 — 2 Fitur Baru: Mini Game & Background Music
+- **Fitur baru: Mini Game "Debug Smasher"** — game klik-klik sederhana
+  bertema debugging. Klik 🐛 bug biasa (+10 poin) atau 🪲 bug langka
+  (+30 poin) sebelum hilang, dan hindari klik ✅ clean code (-15 poin).
+  Round berlangsung 30 detik, makin lama target makin cepat muncul.
+  High score tersimpan otomatis di browser (localStorage) tanpa backend.
+- **Fitur baru: Background Music Toggle** — tombol speaker di navbar
+  untuk play/pause musik ambient (`assets/sounds/bgm.mp3`, belum
+  disertakan — placeholder). Musik tidak auto-play (browser modern
+  memblokir autoplay bersuara), jadi hanya mulai saat tombol diklik.
+  Ada toast peringatan otomatis kalau file musik belum diisi.
+- Section baru "Mini Game" ditambahkan di antara Terminal dan Contact,
+  termasuk di navbar dan command palette (`Ctrl+K` → "Buka Mini Game" /
+  "Toggle Musik").
 
 ### v1.3 — Polish & Bug Fixes
 - **Fix:** overlay command palette (`#commandPalette`) sebelumnya tetap

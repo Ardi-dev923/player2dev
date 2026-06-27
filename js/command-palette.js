@@ -23,8 +23,17 @@
     { label: 'Buka Skills', hint: 'section', action: () => scrollToSection('#skills') },
     { label: 'Buka Projects', hint: 'section', action: () => scrollToSection('#projects') },
     { label: 'Buka Terminal', hint: 'section', action: () => scrollToSection('#terminal') },
+    { label: 'Buka Mini Game', hint: 'section', action: () => scrollToSection('#minigame') },
     { label: 'Buka Contact', hint: 'section', action: () => scrollToSection('#contact') },
     { label: 'Scroll ke Atas', hint: 'action', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
+    {
+      label: 'Toggle Musik',
+      hint: 'action',
+      action: () => {
+        const musicBtn = document.getElementById('musicToggle');
+        if (musicBtn) musicBtn.click();
+      }
+    },
     {
       label: 'Toggle Tema Glow (preview)',
       hint: 'fun',
