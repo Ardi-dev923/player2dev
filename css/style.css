@@ -128,6 +128,16 @@ code {
   color: #fff;
 }
 
+/* Indikator fokus untuk navigasi keyboard (Tab). Cursor custom & banyak
+   elemen tanpa outline default membuat pengguna keyboard kehilangan
+   jejak elemen mana yang sedang fokus — ini memperbaikinya tanpa
+   mengganggu tampilan untuk pengguna mouse (hanya muncul saat :focus-visible). */
+:focus-visible {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
@@ -275,6 +285,17 @@ kbd {
 }
 
 .navbar__link:hover::after {
+  width: 100%;
+}
+
+/* State aktif (section yang sedang dilihat saat scroll), di-toggle oleh
+   main.js via IntersectionObserver. Sebelumnya class ini di-toggle tapi
+   belum ada gaya visualnya sama sekali — sekarang sudah ada. */
+.navbar__link.is-active {
+  color: var(--color-cyan);
+}
+
+.navbar__link.is-active::after {
   width: 100%;
 }
 
@@ -682,6 +703,18 @@ kbd {
   font-family: var(--font-mono);
   font-size: 0.88rem;
   color: var(--color-text-dim);
+}
+
+/* Baris perintah yang diketik user, dibedakan warnanya agar terlihat
+   "echo" dari input — sebelumnya semua baris terminal warnanya sama,
+   jadi sulit membedakan command dari hasil output-nya. */
+.term-line--input {
+  color: var(--color-green);
+  margin-top: 0.5rem;
+}
+
+.term-line--error {
+  color: var(--color-pink);
 }
 
 .fake-terminal__input-row {

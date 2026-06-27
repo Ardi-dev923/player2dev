@@ -127,3 +127,38 @@ ke folder `assets/fonts/` bila ingin fully offline).
 Website ini sendiri masuk dalam daftar "Quest Log" project Ardi dengan status
 **Learning** — akan terus di-iterasi seiring Ardi belajar lebih banyak
 JavaScript, animasi, dan best practice frontend.
+
+---
+
+## 📝 Changelog
+
+### v1.3 — Polish & Bug Fixes
+- **Fix:** overlay command palette (`#commandPalette`) sebelumnya tetap
+  menutupi seluruh halaman dan blocking semua klik walau sudah berstatus
+  `hidden`, karena konflik specificity CSS. Sekarang sudah benar-benar
+  tersembunyi saat ditutup.
+- **Fix:** efek ripple sebelumnya memasang `overflow: hidden` permanen di
+  setiap card, yang tanpa sengaja ikut memotong efek glow (`box-shadow`)
+  saat card di-hover. Sekarang `overflow: hidden` hanya aktif sementara,
+  selama animasi ripple berjalan saja.
+- **Fix:** highlight nav link aktif (saat scroll ke section tertentu)
+  sebelumnya tidak punya gaya visual sama sekali walau class-nya sudah
+  di-toggle lewat JavaScript. Sekarang sudah berwarna cyan + underline.
+- **Polish:** titik "..." pada loading screen sebelumnya statis, sekarang
+  dianimasikan berjalan agar terasa lebih hidup.
+- **Polish:** baris di fake terminal sekarang punya warna berbeda —
+  hijau untuk command yang diketik, pink untuk error — supaya lebih
+  mudah dibaca dibanding sebelumnya yang satu warna semua.
+- **A11y:** ditambahkan `:focus-visible` global dengan outline cyan,
+  supaya pengguna yang navigasi dengan keyboard (Tab) tetap bisa melihat
+  elemen mana yang sedang fokus — sebelumnya custom cursor & reset CSS
+  membuat indikator fokus benar-benar hilang.
+- **Polish:** transisi opacity pada custom cursor saat mouse keluar/masuk
+  jendela browser, supaya tidak terasa "patah" / snap tiba-tiba.
+
+### v1.0
+- Rilis awal: struktur folder lengkap, semua fitur inti (loader, cursor,
+  particle, typing, scroll reveal, counter, fake terminal, command palette,
+  easter egg, toast, dsb).
+- Termasuk hotfix overlay command palette yang sempat blocking semua klik
+  di halaman (ditemukan & langsung diperbaiki sebelum rilis v1.3 ini).

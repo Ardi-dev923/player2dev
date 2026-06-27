@@ -104,6 +104,20 @@
   50% { text-shadow: 0 0 30px rgba(0, 240, 255, 0.9), 0 0 50px rgba(139, 92, 246, 0.4); }
 }
 
+/* ---------- LOADER DOTS (titik "..." berjalan, dulu statis) ---------- */
+.loader__dots {
+  display: inline-block;
+  animation: loaderDots 1.2s steps(4, end) infinite;
+  width: 1.2em;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+@keyframes loaderDots {
+  0% { width: 0; }
+  100% { width: 1.2em; }
+}
+
 /* ---------- AVATAR GLOW PULSE ---------- */
 .about__avatar-glow {
   animation: avatarPulse 3.2s ease-in-out infinite;

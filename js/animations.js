@@ -131,7 +131,6 @@
 
     rippleTargets.forEach((el) => {
       el.style.position = el.style.position || 'relative';
-      el.style.overflow = el.style.overflow || 'hidden';
 
       el.addEventListener('click', (e) => {
         const rect = el.getBoundingClientRect();
@@ -143,8 +142,18 @@
         ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
         ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
 
+        // overflow:hidden hanya diaktifkan SELAMA animasi ripple berjalan.
+        // Jika dipasang permanen, box-shadow glow saat hover (lihat
+        // components.css) akan ikut terpotong karena box-shadow dirender
+        // di luar batas kotak elemen induknya.
+        const previousOverflow = el.style.overflow;
+        el.style.overflow = 'hidden';
+
         el.appendChild(ripple);
-        ripple.addEventListener('animationend', () => ripple.remove());
+        ripple.addEventListener('animationend', () => {
+          ripple.remove();
+          el.style.overflow = previousOverflow;
+        });
       });
     });
   }
