@@ -75,7 +75,37 @@
 
   updateIcon();
 
-  // Catatan: preferensi "on" dari sesi sebelumnya TIDAK auto-play di sini,
-  // karena browser modern memblokir autoplay bersuara tanpa interaksi user.
-  // Preferensi hanya dipakai sebagai indikasi, bukan untuk auto-start.
+  /* ---------- AUTOPLAY UNMUTED — DICOBA PAKSA SAAT HALAMAN LOAD ----------
+     PERINGATAN: kebijakan autoplay browser modern (Chrome, Firefox, Safari,
+     Edge) MEMBLOKIR audio unmuted yang diputar otomatis tanpa interaksi user
+     sama sekali di domain tersebut. Baris di bawah ini SENGAJA tetap mencoba
+     memutar otomatis sesuai permintaan, tapi hasilnya tidak konsisten:
+     - Di beberapa browser/device yang sudah pernah ada interaksi dengan
+       domain ini sebelumnya, autoplay unmuted BISA berhasil.
+     - Di kebanyakan kasus (terutama saat pertama kali buka tab), browser
+       akan menolak permintaan ini secara diam-diam (promise rejected),
+       dan musik TIDAK akan terdengar sampai user klik tombol secara manual.
+     Tidak ada cara dari sisi kode untuk memaksa browser mengizinkan ini
+     100% dari waktu — keputusan akhir selalu ada di tangan browser. */
+  function attemptForcedAutoplay() {
+    const playPromise = audio.play();
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise
+        .then(() => {
+          isPlaying = true;
+          updateIcon();
+        })
+        .catch(() => {
+          // Diblokir browser — diamkan tanpa toast error supaya tidak
+          // terasa seperti "bug" di kunjungan pertama. Tombol manual di
+          // navbar tetap selalu berfungsi sebagai fallback.
+          isPlaying = false;
+          updateIcon();
+        });
+    }
+  }
+
+  window.addEventListener('app:loaded', () => {
+    setTimeout(attemptForcedAutoplay, 300);
+  });
 })();
