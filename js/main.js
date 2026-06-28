@@ -72,6 +72,13 @@
             navLinks.forEach((link) => {
               link.classList.toggle('is-active', link.getAttribute('href') === `#${id}`);
             });
+
+            // Hook ke sistem achievement (Fase 2): buka section tertentu
+            // pertama kali = unlock quest terkait. Gamify.unlock() sendiri
+            // sudah aman dipanggil berkali-kali (no-op kalau sudah unlock).
+            if (typeof window.Gamify === 'object' && id !== 'hero') {
+              window.Gamify.unlock('visit_' + id);
+            }
           }
         });
       },

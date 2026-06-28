@@ -37,6 +37,8 @@ portfolio/
 │   ├── command-palette.js       # Command palette (Ctrl + K)
 │   ├── minigame.js              # Mini game "Debug Smasher"
 │   ├── music.js                  # Background music toggle
+│   ├── gamification.js           # EXP, Level, Achievement & Quest system
+│   ├── radar.js                  # Mini radar navigasi section
 │   └── easteregg.js             # Easter egg saat logo diklik berkali-kali
 │
 ├── assets/
@@ -63,6 +65,8 @@ portfolio/
 - Fake Terminal interaktif (`help`, `about`, `skills`, dll)
 - Mini Game "Debug Smasher" dengan high score tersimpan lokal
 - Background Music toggle (play/pause, ikon di navbar)
+- EXP, Level, Achievement & Quest System (15 achievement, persist lokal)
+- Mini Radar navigasi section (desktop)
 - Command Palette (`Ctrl + K` atau klik tombol `⌘K`)
 - Contact Form (simulasi, belum terhubung backend)
 - Toast Notification system
@@ -135,6 +139,35 @@ JavaScript, animasi, dan best practice frontend.
 ---
 
 ## 📝 Changelog
+
+### v2.0 — Phase 2: Gamifikasi
+Lanjutan dari Phase 1 (Visual Foundation), fase ini menambahkan "jiwa
+game" yang sebenarnya ke portfolio — pengunjung sekarang punya progress
+sendiri yang persist antar kunjungan.
+
+- **EXP & Level System** — setiap aksi penting (buka section, main
+  game, pakai terminal, dll) memberi EXP. Level naik tiap 100 EXP.
+  Ditampilkan di HUD kecil pada navbar (`LV.x` + bar), dan level bar di
+  section About sekarang **dinamis** mengikuti progress asli (dulu
+  angkanya statis/hardcoded — sekarang selalu sinkron dengan HUD).
+- **Achievement & Quest System (gabungan)** — 15 achievement berbeda,
+  masing-masing unlock otomatis saat aksi terkait dilakukan (membuka
+  section, menjalankan command terminal, membuka command palette, main
+  Debug Smasher, menyalakan musik, menemukan easter egg, dst). Quest
+  "Full Explorer" otomatis terbuka kalau semua section sudah dikunjungi.
+- **Achievement Popup** — notifikasi ala game muncul di pojok kanan atas
+  setiap achievement baru terbuka, lengkap dengan ikon & jumlah EXP.
+- **Achievement Panel** — drawer yang bisa dibuka lewat HUD di navbar
+  atau command palette (`Ctrl+K` → "Buka Achievements"), menampilkan
+  semua 15 quest: yang belum terbuka ditampilkan sebagai `???` (misteri),
+  yang sudah terbuka menampilkan judul, deskripsi, dan EXP-nya.
+  Progress (mis. "3 / 15") tersimpan otomatis di localStorage.
+- **Fake Save Progress** — indikator kecil "💾 Progress Saved" muncul
+  sebentar di bawah layar setiap kali progress baru tersimpan.
+- **Mini Radar** — widget titik-titik kecil di sisi kanan layar (desktop
+  only) menunjukkan section mana yang sedang aktif, dan bisa diklik
+  untuk lompat cepat ke section tersebut. Disembunyikan di mobile/tablet
+  karena kurang relevan di touch device & berpotensi menutupi konten.
 
 ### v2.0 — Phase 1: Visual Foundation
 Awal dari Portfolio V2, fokus ke fondasi visual sebelum lanjut ke fase

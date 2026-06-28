@@ -184,25 +184,12 @@
     });
   }
 
-  /* ---------- ANIMATE ABOUT LEVEL BAR (triggered on reveal) ---------- */
-  function initLevelBar() {
-    const levelFill = document.querySelector('.about__level-fill');
-    if (!levelFill) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const fill = entry.target.getAttribute('data-fill') || 0;
-            entry.target.style.width = fill + '%';
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.4 }
-    );
-    observer.observe(levelFill);
-  }
+  /* ---------- ANIMATE ABOUT LEVEL BAR ----------
+     Catatan (Fase 2): bar ini sekarang dikontrol penuh oleh
+     gamification.js berdasarkan EXP/Level pengunjung yang sebenarnya,
+     bukan nilai statis lagi. Fungsi observer manual di sini sudah tidak
+     diperlukan supaya tidak ada dua script yang menulis ke elemen yang
+     sama (style.width) secara bersamaan. */
 
   /* ---------- ANIMATE SKILL BARS (triggered on reveal) ---------- */
   function initSkillBars() {
@@ -255,7 +242,6 @@
     initParallax();
     initCardTilt();
     initRippleEffect();
-    initLevelBar();
     initSkillBars();
     initMobileNav();
   });

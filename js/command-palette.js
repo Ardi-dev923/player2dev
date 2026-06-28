@@ -25,6 +25,13 @@
     { label: 'Buka Terminal', hint: 'section', action: () => scrollToSection('#terminal') },
     { label: 'Buka Mini Game', hint: 'section', action: () => scrollToSection('#minigame') },
     { label: 'Buka Contact', hint: 'section', action: () => scrollToSection('#contact') },
+    {
+      label: 'Buka Achievements',
+      hint: 'gamify',
+      action: () => {
+        if (typeof window.Gamify === 'object') window.Gamify.openPanel();
+      }
+    },
     { label: 'Scroll ke Atas', hint: 'action', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
     {
       label: 'Toggle Musik',
@@ -115,6 +122,11 @@
     input.value = '';
     filterActions('');
     setTimeout(() => input.focus(), 50);
+
+    // Hook ke sistem achievement (Fase 2)
+    if (typeof window.Gamify === 'object') {
+      window.Gamify.unlock('palette_used');
+    }
   }
 
   function closePalette() {

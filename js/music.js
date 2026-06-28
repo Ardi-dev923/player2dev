@@ -44,6 +44,11 @@
           isPlaying = true;
           updateIcon();
           localStorage.setItem(MUSIC_PREF_KEY, 'on');
+
+          // Hook ke sistem achievement (Fase 2)
+          if (typeof window.Gamify === 'object') {
+            window.Gamify.unlock('music_used');
+          }
         })
         .catch(() => {
           // Gagal play kemungkinan besar karena file belum ada / browser block
@@ -94,6 +99,9 @@
         .then(() => {
           isPlaying = true;
           updateIcon();
+          if (typeof window.Gamify === 'object') {
+            window.Gamify.unlock('music_used');
+          }
         })
         .catch(() => {
           // Diblokir browser — diamkan tanpa toast error supaya tidak

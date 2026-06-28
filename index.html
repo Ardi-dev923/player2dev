@@ -119,6 +119,12 @@
       </ul>
 
       <div class="navbar__actions">
+        <button class="hud-button" id="hudButton" title="Lihat Achievement & Progress">
+          <span class="hud-button__level" id="hudLevel">LV.1</span>
+          <span class="hud-button__bar-track">
+            <span class="hud-button__bar-fill" id="hudExpFill"></span>
+          </span>
+        </button>
         <button class="navbar__music-btn" id="musicToggle" title="Putar / pause musik" aria-pressed="false">
           <span class="navbar__music-icon" id="musicIcon">🔇</span>
         </button>
@@ -131,6 +137,31 @@
       </div>
     </nav>
   </header>
+
+  <!-- ============ ACHIEVEMENT PANEL (Fase 2) ============ -->
+  <div class="achievement-panel" id="achievementPanel">
+    <div class="achievement-panel__backdrop" id="achievementPanelBackdrop"></div>
+    <div class="achievement-panel__box glass">
+      <div class="achievement-panel__header">
+        <div>
+          <h3 class="achievement-panel__title">Achievements &amp; Quest Log</h3>
+          <p class="achievement-panel__count" id="achievementCount">0 / 15</p>
+        </div>
+        <button class="achievement-panel__close" id="achievementPanelClose" aria-label="Tutup">✕</button>
+      </div>
+      <ul class="achievement-list" id="achievementList"></ul>
+    </div>
+  </div>
+
+  <!-- ============ ACHIEVEMENT POPUP CONTAINER (Fase 2) ============ -->
+  <div class="achievement-popup-container" id="achievementPopupContainer" aria-live="polite"></div>
+
+  <!-- ============ SAVE INDICATOR (Fase 2 — "Fake Save Progress") ============ -->
+  <div class="save-indicator" id="saveIndicator">💾 Progress Saved</div>
+
+  <!-- ============ MINI RADAR (Fase 2 — posisi section saat ini) ============ -->
+  <nav class="mini-radar" id="miniRadar" aria-label="Navigasi cepat antar section"></nav>
+
 
   <main id="main-content">
 
@@ -208,9 +239,9 @@
           <h3 class="about__name">Ardi</h3>
           <p class="about__class">Class: Apprentice Developer</p>
           <div class="about__level-bar" title="Level pengalaman saat ini">
-            <div class="about__level-fill" data-fill="38"></div>
+            <div class="about__level-fill" id="aboutLevelFill" data-fill="0"></div>
           </div>
-          <p class="about__level-label">LV.4 — 38% to next level</p>
+          <p class="about__level-label" id="aboutLevelLabel">LV.1 — 0% to next level</p>
         </div>
 
         <div class="about__text reveal" data-reveal="right">
@@ -575,6 +606,8 @@
   <script src="js/easteregg.js"></script>
   <script src="js/minigame.js"></script>
   <script src="js/music.js"></script>
+  <script src="js/gamification.js"></script>
+  <script src="js/radar.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

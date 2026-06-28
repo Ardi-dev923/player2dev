@@ -247,6 +247,17 @@
   to { opacity: 1; transform: translateX(0); }
 }
 
+/* ---------- ACHIEVEMENT POPUP IN/OUT (Fase 2) ---------- */
+@keyframes achievementIn {
+  from { opacity: 0; transform: translateX(40px) scale(0.92); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes achievementOut {
+  from { opacity: 1; transform: translateX(0) scale(1); }
+  to { opacity: 0; transform: translateX(40px) scale(0.92); }
+}
+
 /* ---------- AURORA BACKGROUND: SLOW DRIFT (V2) ---------- */
 .aurora-blob--1 { animation: auroraDrift1 22s ease-in-out infinite; }
 .aurora-blob--2 { animation: auroraDrift2 26s ease-in-out infinite; }

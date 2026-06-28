@@ -176,6 +176,13 @@
       renderHighScore();
     }
 
+    // Hook ke sistem achievement (Fase 2): selesai 1 round = unlock quest,
+    // dan kalau score cukup tinggi (>=100) ada achievement tambahan.
+    if (typeof window.Gamify === 'object') {
+      window.Gamify.unlock('minigame_played');
+      if (score >= 100) window.Gamify.unlock('minigame_master');
+    }
+
     overlayTitle.textContent = isNewHigh ? 'High Score Baru! 🎉' : 'Round Selesai';
     overlayDesc.innerHTML = isNewHigh
       ? `Mantap! Score kamu <strong>${score}</strong> — rekor baru di browser ini.`

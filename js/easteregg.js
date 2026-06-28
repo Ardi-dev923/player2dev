@@ -30,6 +30,11 @@
     document.body.classList.add('shake');
     logo.classList.add('glitch-active');
 
+    // Hook ke sistem achievement (Fase 2)
+    if (typeof window.Gamify === 'object') {
+      window.Gamify.unlock('easter_egg_found');
+    }
+
     // Coba mainkan sound efek (boleh gagal diam-diam jika file belum ada)
     if (sound) {
       sound.currentTime = 0;

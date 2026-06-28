@@ -90,6 +90,12 @@
 
     printPromptLine(raw);
 
+    // Hook ke sistem achievement (Fase 2): command pertama yang berhasil
+    // dijalankan (apapun itu, termasuk command tidak dikenal) = unlock quest.
+    if (typeof window.Gamify === 'object') {
+      window.Gamify.unlock('terminal_used');
+    }
+
     if (commands[cmd]) {
       const output = commands[cmd]();
       if (output) {

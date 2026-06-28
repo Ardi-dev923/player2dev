@@ -162,6 +162,31 @@
     display: none;
   }
 
+  /* Mini radar disembunyikan di mobile/tablet — kurang relevan di touch
+     device, dan akan menutupi konten di layar sempit. */
+  .mini-radar {
+    display: none;
+  }
+
+  /* Achievement popup pindah ke bawah (dekat save indicator) di mobile,
+     supaya tidak menabrak navbar/burger menu di pojok kanan atas. */
+  .achievement-popup-container {
+    top: auto;
+    bottom: 90px;
+    right: 12px;
+    left: 12px;
+    align-items: stretch;
+  }
+
+  .achievement-popup {
+    max-width: 100%;
+  }
+
+  .hud-button {
+    min-width: 52px;
+    padding: 0.3rem 0.55rem;
+  }
+
   .hero__title {
     font-size: clamp(1.8rem, 8vw, 2.6rem);
   }
