@@ -50,14 +50,16 @@
 </head>
 <body data-page="home">
 
-  <!-- ============ LOADING SCREEN ============ -->
+  <!-- ============ LOADING SCREEN (BOOT SEQUENCE V2) ============ -->
   <div id="loader" class="loader" aria-hidden="true">
     <div class="loader__inner">
-      <div class="loader__logo">A_</div>
+      <div class="loader__logo" id="loaderLogo">A_</div>
+
+      <div class="loader__terminal" id="loaderTerminal" aria-hidden="true"></div>
+
       <div class="loader__bar-track">
         <div class="loader__bar-fill" id="loaderBarFill"></div>
       </div>
-      <p class="loader__status" id="loaderStatus">BOOTING SYSTEM<span class="loader__dots">...</span></p>
       <p class="loader__percent" id="loaderPercent">0%</p>
     </div>
   </div>
@@ -71,6 +73,13 @@
 
   <!-- ============ SCROLL PROGRESS ============ -->
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <!-- ============ AURORA BACKGROUND (V2) ============ -->
+  <div class="aurora-bg" aria-hidden="true">
+    <span class="aurora-blob aurora-blob--1"></span>
+    <span class="aurora-blob aurora-blob--2"></span>
+    <span class="aurora-blob aurora-blob--3"></span>
+  </div>
 
   <!-- ============ PARTICLE CANVAS ============ -->
   <canvas id="particleCanvas" class="particle-canvas" aria-hidden="true"></canvas>
@@ -128,10 +137,18 @@
     <!-- ============ HERO ============ -->
     <section id="hero" class="hero">
       <div class="hero__floating-shapes" aria-hidden="true">
-        <span class="shape shape--1"></span>
-        <span class="shape shape--2"></span>
-        <span class="shape shape--3"></span>
-        <span class="shape shape--4"></span>
+        <span class="shape shape--1 parallax-layer" data-depth="14"></span>
+        <span class="shape shape--2 parallax-layer" data-depth="10"></span>
+        <span class="shape shape--3 parallax-layer" data-depth="18"></span>
+        <span class="shape shape--4 parallax-layer" data-depth="8"></span>
+      </div>
+
+      <div class="hero__floating-icons" aria-hidden="true">
+        <span class="hero-icon hero-icon--1 parallax-layer" data-depth="34">🎮</span>
+        <span class="hero-icon hero-icon--2 parallax-layer" data-depth="22">💻</span>
+        <span class="hero-icon hero-icon--3 parallax-layer" data-depth="40">⌨️</span>
+        <span class="hero-icon hero-icon--4 parallax-layer" data-depth="26">🧠</span>
+        <span class="hero-icon hero-icon--5 parallax-layer" data-depth="46">🚀</span>
       </div>
 
       <div class="hero__content">
@@ -182,7 +199,7 @@
       </div>
 
       <div class="about__grid">
-        <div class="about__card glass tilt reveal">
+        <div class="about__card glass tilt reveal" data-reveal="left">
           <div class="about__avatar-frame">
             <div class="about__avatar-glow"></div>
             <img src="assets/images/avatar.jpg" alt="Avatar Ardi" class="about__avatar" loading="lazy" onerror="this.style.display='none'">
@@ -196,7 +213,7 @@
           <p class="about__level-label">LV.4 — 38% to next level</p>
         </div>
 
-        <div class="about__text reveal">
+        <div class="about__text reveal" data-reveal="right">
           <p>
             Saya menghabiskan bertahun-tahun di depan layar sebagai gamer — menghapal combo,
             membaca pola musuh, dan belajar bahwa setiap kekalahan adalah data, bukan akhir.
@@ -229,7 +246,7 @@
       </div>
 
       <ol class="timeline">
-        <li class="timeline__item reveal">
+        <li class="timeline__item reveal" data-reveal="tilt">
           <div class="timeline__marker"></div>
           <div class="timeline__card glass">
             <span class="timeline__tag">SAVE POINT 01</span>
@@ -238,7 +255,7 @@
           </div>
         </li>
 
-        <li class="timeline__item reveal">
+        <li class="timeline__item reveal" data-reveal="tilt">
           <div class="timeline__marker"></div>
           <div class="timeline__card glass">
             <span class="timeline__tag">SAVE POINT 02</span>
@@ -247,7 +264,7 @@
           </div>
         </li>
 
-        <li class="timeline__item reveal">
+        <li class="timeline__item reveal" data-reveal="tilt">
           <div class="timeline__marker"></div>
           <div class="timeline__card glass">
             <span class="timeline__tag">SAVE POINT 03</span>
@@ -256,7 +273,7 @@
           </div>
         </li>
 
-        <li class="timeline__item reveal">
+        <li class="timeline__item reveal" data-reveal="tilt">
           <div class="timeline__marker"></div>
           <div class="timeline__card glass">
             <span class="timeline__tag">SAVE POINT 04 — CURRENT</span>
@@ -265,7 +282,7 @@
           </div>
         </li>
 
-        <li class="timeline__item reveal">
+        <li class="timeline__item reveal" data-reveal="tilt">
           <div class="timeline__marker timeline__marker--future"></div>
           <div class="timeline__card glass timeline__card--future">
             <span class="timeline__tag">NEXT SAVE POINT</span>
@@ -285,7 +302,7 @@
       </div>
 
       <div class="skills__grid">
-        <div class="skill-card glass tilt reveal" data-skill="HTML" data-level="70">
+        <div class="skill-card glass tilt reveal" data-reveal="scale" data-skill="HTML" data-level="70">
           <div class="skill-card__head">
             <span class="skill-card__name">HTML</span>
             <span class="skill-card__pct">70%</span>
@@ -294,7 +311,7 @@
           <p class="skill-card__note">Cukup nyaman menyusun struktur semantic.</p>
         </div>
 
-        <div class="skill-card glass tilt reveal" data-skill="CSS" data-level="60">
+        <div class="skill-card glass tilt reveal" data-reveal="scale" data-skill="CSS" data-level="60">
           <div class="skill-card__head">
             <span class="skill-card__name">CSS</span>
             <span class="skill-card__pct">60%</span>
@@ -303,7 +320,7 @@
           <p class="skill-card__note">Masih belajar layout kompleks &amp; animasi.</p>
         </div>
 
-        <div class="skill-card glass tilt reveal" data-skill="JavaScript" data-level="45">
+        <div class="skill-card glass tilt reveal" data-reveal="scale" data-skill="JavaScript" data-level="45">
           <div class="skill-card__head">
             <span class="skill-card__name">JavaScript</span>
             <span class="skill-card__pct">45%</span>
@@ -312,7 +329,7 @@
           <p class="skill-card__note">Sedang grinding logic, DOM, dan async.</p>
         </div>
 
-        <div class="skill-card glass tilt reveal" data-skill="Git & GitHub" data-level="35">
+        <div class="skill-card glass tilt reveal" data-reveal="scale" data-skill="Git & GitHub" data-level="35">
           <div class="skill-card__head">
             <span class="skill-card__name">Git &amp; GitHub</span>
             <span class="skill-card__pct">35%</span>
@@ -321,7 +338,7 @@
           <p class="skill-card__note">Paham commit &amp; push, masih belajar branching.</p>
         </div>
 
-        <div class="skill-card glass tilt reveal" data-skill="Problem Solving" data-level="65">
+        <div class="skill-card glass tilt reveal" data-reveal="scale" data-skill="Problem Solving" data-level="65">
           <div class="skill-card__head">
             <span class="skill-card__name">Problem Solving</span>
             <span class="skill-card__pct">65%</span>
@@ -330,7 +347,7 @@
           <p class="skill-card__note">Sisa instinct dari kebiasaan main game strategi.</p>
         </div>
 
-        <div class="skill-card glass tilt reveal" data-skill="Konsistensi Belajar" data-level="80">
+        <div class="skill-card glass tilt reveal" data-reveal="scale" data-skill="Konsistensi Belajar" data-level="80">
           <div class="skill-card__head">
             <span class="skill-card__name">Konsistensi Belajar</span>
             <span class="skill-card__pct">80%</span>
@@ -344,19 +361,19 @@
     <!-- ============ STATISTICS ============ -->
     <section id="stats" class="section stats">
       <div class="stats__grid">
-        <div class="stat-box glass reveal">
+        <div class="stat-box glass reveal" data-reveal="scale">
           <span class="stat-box__number" data-target="120" data-suffix="+">0</span>
           <span class="stat-box__label">Jam Belajar Coding</span>
         </div>
-        <div class="stat-box glass reveal">
+        <div class="stat-box glass reveal" data-reveal="scale">
           <span class="stat-box__number" data-target="35" data-suffix="+">0</span>
           <span class="stat-box__label">Bug yang Berhasil Ditaklukan</span>
         </div>
-        <div class="stat-box glass reveal">
+        <div class="stat-box glass reveal" data-reveal="scale">
           <span class="stat-box__number" data-target="8" data-suffix="">0</span>
           <span class="stat-box__label">Mini Project Latihan</span>
         </div>
-        <div class="stat-box glass reveal">
+        <div class="stat-box glass reveal" data-reveal="scale">
           <span class="stat-box__number" data-target="999" data-suffix="+">0</span>
           <span class="stat-box__label">Cangkir Kopi / Energy Drink</span>
         </div>
@@ -372,7 +389,7 @@
       </div>
 
       <div class="projects__grid">
-        <article class="project-card glass tilt reveal">
+        <article class="project-card glass tilt reveal" data-reveal="flip">
           <div class="project-card__status project-card__status--learning">Learning</div>
           <h3 class="project-card__title">Personal Portfolio v1</h3>
           <p class="project-card__desc">Website ini sendiri — dipakai sebagai latihan HTML, CSS, dan JavaScript murni tanpa framework.</p>
@@ -383,7 +400,7 @@
           </div>
         </article>
 
-        <article class="project-card glass tilt reveal">
+        <article class="project-card glass tilt reveal" data-reveal="flip">
           <div class="project-card__status project-card__status--planning">Planning</div>
           <h3 class="project-card__title">Mini Game Tracker</h3>
           <p class="project-card__desc">Rencana app sederhana untuk mencatat jam main &amp; progress game pribadi. Masih tahap rancangan fitur.</p>
@@ -393,7 +410,7 @@
           </div>
         </article>
 
-        <article class="project-card glass tilt reveal">
+        <article class="project-card glass tilt reveal" data-reveal="flip">
           <div class="project-card__status project-card__status--coming">Coming Soon</div>
           <h3 class="project-card__title">To-Do List "Quest Board"</h3>
           <p class="project-card__desc">To-do list bertema RPG, setiap task akan terasa seperti quest dengan reward XP virtual.</p>
@@ -403,7 +420,7 @@
           </div>
         </article>
 
-        <article class="project-card glass tilt reveal">
+        <article class="project-card glass tilt reveal" data-reveal="flip">
           <div class="project-card__status project-card__status--planning">Planning</div>
           <h3 class="project-card__title">Belajar Backend Dasar</h3>
           <p class="project-card__desc">Rencana belajar Node.js dasar setelah JavaScript fundamental lebih matang. Belum dimulai.</p>

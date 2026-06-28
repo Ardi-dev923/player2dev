@@ -46,6 +46,7 @@
   function draw() {
     ctx.clearRect(0, 0, width, height);
 
+    // ---------- UPDATE POSISI & REAKSI MOUSE ----------
     particles.forEach((p) => {
       p.x += p.vx;
       p.y += p.vy;
@@ -56,17 +57,49 @@
       if (p.y < 0) p.y = height;
       if (p.y > height) p.y = 0;
 
-      // Tarikan halus ke arah mouse (efek ambient interaktif)
+      // Reaksi mouse V2: partikel di sekitar cursor saling MENJAUH
+      // (repulsion) — terasa seperti "energy field", lebih hidup
+      // dibanding tarikan halus versi sebelumnya.
       if (mouseX !== null) {
-        const dx = mouseX - p.x;
-        const dy = mouseY - p.y;
+        const dx = p.x - mouseX;
+        const dy = p.y - mouseY;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 140) {
-          p.x -= dx * 0.0025;
-          p.y -= dy * 0.0025;
+        const radius = 130;
+
+        if (dist < radius && dist > 0.001) {
+          const force = (1 - dist / radius) * 1.8;
+          p.x += (dx / dist) * force;
+          p.y += (dy / dist) * force;
         }
       }
+    });
 
+    // ---------- GAMBAR CONNECTING LINES (efek "network/code graph") ----------
+    // Hanya menghubungkan partikel yang cukup berdekatan, dan opacity garis
+    // memudar sesuai jarak — supaya terasa seperti graph data, sejalan
+    // dengan tema developer/teknologi di website ini.
+    const LINK_DISTANCE = 110;
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const a = particles[i];
+        const b = particles[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < LINK_DISTANCE) {
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = 'rgba(0, 240, 255, ' + (1 - dist / LINK_DISTANCE) * 0.15 + ')';
+          ctx.lineWidth = 0.6;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // ---------- GAMBAR PARTIKEL ----------
+    particles.forEach((p) => {
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
       ctx.fillStyle = p.color;

@@ -1,86 +1,109 @@
 /* ==========================================================================
-   LOADER.JS — Loading Screen & Boot Animation
-   Mensimulasikan proses "booting system" sebelum konten utama ditampilkan.
+   LOADER.JS — Boot Sequence V2 (Sinematik)
+   Loading screen ala "booting OS": baris log terminal yang muncul satu-satu
+   (typewriter), status check, progress bar yang nyambung ke jumlah baris
+   yang sudah selesai, dan glitch effect sesekali pada logo.
    ========================================================================== */
 
 (function () {
   'use strict';
 
   const loaderEl = document.getElementById('loader');
+  const terminalEl = document.getElementById('loaderTerminal');
   const barFill = document.getElementById('loaderBarFill');
-  const statusText = document.getElementById('loaderStatus');
   const percentText = document.getElementById('loaderPercent');
+  const logoEl = document.getElementById('loaderLogo');
 
   if (!loaderEl) return;
 
-  // Pesan boot yang berganti seiring progress, sesuai tema gamer -> programmer
-  const bootMessages = [
-    'BOOTING SYSTEM',
-    'LOADING PLAYER DATA',
-    'COMPILING SKILLS',
-    'MOUNTING TERMINAL',
-    'SYNCING JOURNEY LOG',
-    'READY TO SPAWN'
+  // Skenario boot log — urutan ini yang membuat loading terasa "sinematik"
+  // dibanding sekadar progress bar polos. Tiap baris punya status sendiri.
+  const bootLog = [
+    { text: 'INIT core_modules.sys', status: 'ok' },
+    { text: 'MOUNTING /journey/gamer-to-dev', status: 'ok' },
+    { text: 'CHECKING dependencies...', status: 'check' },
+    { text: 'HTML5 / CSS3 / JavaScript', status: 'ok' },
+    { text: 'LOADING skill_tree.dat', status: 'ok' },
+    { text: 'VERIFYING terminal access', status: 'check' },
+    { text: 'WARNING: experience masih level rendah', status: 'warn' },
+    { text: 'COMPILING portfolio.exe', status: 'ok' },
+    { text: 'SYNCING particle background', status: 'ok' },
+    { text: 'ACCESS GRANTED', status: 'success' }
   ];
 
+  let lineIndex = 0;
   let progress = 0;
-  let msgIndex = 0;
 
-  function updateLoader() {
-    // Increment acak agar terasa natural, bukan linear sempurna
-    const increment = Math.random() * 9 + 3;
-    progress = Math.min(progress + increment, 100);
+  function appendLine(line) {
+    const row = document.createElement('div');
+    row.className = `loader__line loader__line--${line.status}`;
 
+    const prefix =
+      line.status === 'ok' ? '[OK]' :
+      line.status === 'warn' ? '[WARN]' :
+      line.status === 'success' ? '[DONE]' :
+      '[....]';
+
+    row.innerHTML = `<span class="loader__line-prefix">${prefix}</span> ${line.text}`;
+    terminalEl.appendChild(row);
+    terminalEl.scrollTop = terminalEl.scrollHeight;
+  }
+
+  // Glitch effect singkat pada logo, dipanggil acak selama proses boot
+  function triggerLogoGlitch() {
+    if (!logoEl) return;
+    logoEl.classList.add('glitch-active');
+    setTimeout(() => logoEl.classList.remove('glitch-active'), 280);
+  }
+
+  function processNextLine() {
+    if (lineIndex >= bootLog.length) {
+      return finishLoading();
+    }
+
+    const line = bootLog[lineIndex];
+    appendLine(line);
+    lineIndex++;
+
+    progress = Math.min(Math.round((lineIndex / bootLog.length) * 100), 100);
     if (barFill) barFill.style.width = progress + '%';
-    if (percentText) percentText.textContent = Math.floor(progress) + '%';
+    if (percentText) percentText.textContent = progress + '%';
 
-    const targetMsgIndex = Math.min(
-      Math.floor((progress / 100) * bootMessages.length),
-      bootMessages.length - 1
-    );
+    // Glitch sesekali secara acak, lebih sering menjelang akhir boot
+    if (Math.random() < 0.35) triggerLogoGlitch();
 
-    if (targetMsgIndex !== msgIndex) {
-      msgIndex = targetMsgIndex;
-      if (statusText) {
-        statusText.innerHTML = bootMessages[msgIndex] + '<span class="loader__dots">...</span>';
-      }
-    }
-
-    if (progress < 100) {
-      setTimeout(updateLoader, 120);
-    } else {
-      finishLoading();
-    }
+    // Baris "CHECKING" / "VERIFYING" terasa lebih lama (simulasi proses),
+    // baris biasa lebih cepat agar boot tetap terasa snappy keseluruhan.
+    const delay = line.status === 'check' ? 420 : 220;
+    setTimeout(processNextLine, delay);
   }
 
   function finishLoading() {
+    triggerLogoGlitch();
     setTimeout(() => {
       loaderEl.classList.add('is-hidden');
       document.body.classList.add('loaded');
-      // Trigger event agar modul lain (scroll reveal dll) tahu loader sudah selesai
       window.dispatchEvent(new CustomEvent('app:loaded'));
 
-      // Hapus loader dari DOM setelah transisi selesai demi performa
       setTimeout(() => {
         if (loaderEl.parentNode) {
           loaderEl.parentNode.removeChild(loaderEl);
         }
       }, 700);
-    }, 350);
+    }, 450);
   }
 
-  // Mulai loader setelah DOM siap
   document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(updateLoader, 200);
+    setTimeout(processNextLine, 350);
   });
 
-  // Fallback: jika karena alasan tertentu loader macet, paksa selesai
+  // Fallback: kalau macet karena alasan apa pun, paksa selesai
   window.addEventListener('load', () => {
     setTimeout(() => {
-      if (progress < 100) {
-        progress = 100;
+      if (lineIndex < bootLog.length) {
+        lineIndex = bootLog.length;
         finishLoading();
       }
-    }, 4000);
+    }, 5000);
   });
 })();

@@ -136,6 +136,35 @@ JavaScript, animasi, dan best practice frontend.
 
 ## 📝 Changelog
 
+### v2.0 — Phase 1: Visual Foundation
+Awal dari Portfolio V2, fokus ke fondasi visual sebelum lanjut ke fase
+gamifikasi, showcase, dan secret mode di fase berikutnya.
+
+- **Boot Sequence V2** — loading screen dirombak total jadi simulasi
+  "booting OS": baris log terminal muncul satu-satu (typewriter), status
+  check (`[OK]` / `[WARN]` / `[....]` / `[DONE]`), progress bar yang
+  nyambung ke jumlah baris selesai, dan glitch effect acak di logo
+  selama proses boot.
+- **Interactive Hero V2** — menambahkan 5 floating icon (🎮💻⌨️🧠🚀) dengan
+  parallax depth berbasis posisi mouse. Pakai teknik *lerp* (linear
+  interpolation) di dalam `requestAnimationFrame` supaya gerakan terasa
+  halus & "mengejar" mouse secara premium, bukan langsung snap.
+- **Aurora Background** — layer gradient blur lembut yang bergerak pelan
+  di belakang particle canvas, menambah kedalaman visual tanpa
+  mengganggu keterbacaan teks.
+- **Particle Background V2** — partikel sekarang saling terhubung garis
+  tipis kalau berdekatan (efek "network/code graph"), dan bereaksi lebih
+  kuat ke posisi mouse (repulsion/menjauh, bukan tarikan halus seperti
+  sebelumnya).
+- **Scroll Animation Premium** — tiap section sekarang punya arah reveal
+  yang berbeda (`data-reveal`): About slide kiri/kanan (converging),
+  Journey tilt masuk, Skills & Stats scale pop-in dengan stagger delay,
+  Projects flip 3D. Tidak monoton fade-up semua seperti sebelumnya.
+- **Fix kecil:** reposisi floating icon di breakpoint mobile/tablet
+  (≤768px) supaya tidak menabrak teks hero, karena posisi yang pas di
+  desktop ternyata overlap saat layout teks jadi lebih tinggi di layar
+  kecil.
+
 ### v1.5 — 2 Fitur Baru: Mini Game & Background Music
 - **Fitur baru: Mini Game "Debug Smasher"** — game klik-klik sederhana
   bertema debugging. Klik 🐛 bug biasa (+10 poin) atau 🪲 bug langka

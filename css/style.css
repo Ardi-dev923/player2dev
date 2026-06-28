@@ -427,6 +427,28 @@ kbd {
 .shape--3 { width: 100px; height: 100px; top: 25%; right: 12%; background: var(--color-pink); }
 .shape--4 { width: 50px; height: 50px; top: 70%; right: 18%; background: var(--color-green); }
 
+/* ---------- HERO FLOATING ICONS (Interactive Hero V2) ---------- */
+.hero__floating-icons {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-icon {
+  position: absolute;
+  font-size: 1.8rem;
+  filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.35));
+  opacity: 0.85;
+  will-change: transform, translate;
+}
+
+.hero-icon--1 { top: 20%; left: 8%; }
+.hero-icon--2 { top: 72%; left: 20%; font-size: 2.1rem; }
+.hero-icon--3 { top: 30%; right: 9%; }
+.hero-icon--4 { top: 60%; right: 22%; font-size: 1.6rem; }
+.hero-icon--5 { top: 12%; right: 28%; font-size: 1.5rem; }
+
 /* ---------- ABOUT ---------- */
 .about__grid {
   display: grid;
@@ -871,6 +893,49 @@ kbd {
   inset: 0;
   z-index: -1;
   pointer-events: none;
+}
+
+/* ---------- AURORA BACKGROUND (V2) ----------
+   Layer gradient blur lembut di belakang particle canvas, posisinya
+   slow-shifting agar terasa "hidup" tanpa mengganggu keterbacaan teks. */
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.35;
+  mix-blend-mode: screen;
+}
+
+.aurora-blob--1 {
+  width: 50vw;
+  height: 50vw;
+  top: -10%;
+  left: -10%;
+  background: radial-gradient(circle, var(--color-violet), transparent 70%);
+}
+
+.aurora-blob--2 {
+  width: 45vw;
+  height: 45vw;
+  top: 30%;
+  right: -15%;
+  background: radial-gradient(circle, var(--color-cyan), transparent 70%);
+}
+
+.aurora-blob--3 {
+  width: 40vw;
+  height: 40vw;
+  bottom: -15%;
+  left: 20%;
+  background: radial-gradient(circle, var(--color-green), transparent 70%);
 }
 
 /* ---------- MOUSE GLOW ---------- */

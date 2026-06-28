@@ -77,20 +77,46 @@
     toggleVisibility();
   }
 
-  /* ---------- PARALLAX FLOATING SHAPES (subtle, mouse-based) ---------- */
+  /* ---------- PARALLAX (Interactive Hero V2) ----------
+     Memakai lerp (linear interpolation) di dalam requestAnimationFrame
+     supaya gerakan terasa "mengejar" mouse secara halus (premium feel),
+     dibanding versi lama yang langsung snap ke posisi mouse setiap event.
+     Memakai CSS property `translate` (bukan `transform`) agar tidak
+     konflik dengan animasi idle (float / iconBob) yang sudah memakai
+     `transform` di file animations.css. */
   function initParallax() {
-    const shapes = document.querySelectorAll('.shape');
-    if (!shapes.length) return;
+    const layers = document.querySelectorAll('.parallax-layer');
+    if (!layers.length) return;
+
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+    if (isTouchDevice) return; // parallax mouse tidak relevan di touch device
+
+    let mouseX = 0;
+    let mouseY = 0;
+    const current = new Map();
+    layers.forEach((el) => current.set(el, { x: 0, y: 0 }));
 
     window.addEventListener('mousemove', (e) => {
-      const xRatio = (e.clientX / window.innerWidth - 0.5) * 2;
-      const yRatio = (e.clientY / window.innerHeight - 0.5) * 2;
-
-      shapes.forEach((shape, i) => {
-        const depth = (i + 1) * 6;
-        shape.style.translate = `${xRatio * depth}px ${yRatio * depth}px`;
-      });
+      mouseX = (e.clientX / window.innerWidth - 0.5) * 2; // range -1..1
+      mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
     });
+
+    function loop() {
+      layers.forEach((el) => {
+        const depth = parseFloat(el.dataset.depth) || 10;
+        const targetX = mouseX * depth;
+        const targetY = mouseY * depth;
+        const state = current.get(el);
+
+        // Lerp 0.07 -> gerakan halus dengan sedikit "lag" elegan
+        state.x += (targetX - state.x) * 0.07;
+        state.y += (targetY - state.y) * 0.07;
+
+        el.style.translate = `${state.x}px ${state.y}px`;
+      });
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
   }
 
   /* ---------- CARD TILT (3D mouse tilt effect on .tilt elements) ---------- */
